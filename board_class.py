@@ -16,6 +16,7 @@ class Game_Piece:
     def draw(self, surface):
         pg.draw.circle(surface, self.colour, (55, 705), 5)
         image = pg.draw.circle(surface, self.colour, (55, 705), 5)
-        image.get_rect()
-
+        image_x,image_y = image.get_rect()
+        image_x //= 2
+        image_y //= 2
 
