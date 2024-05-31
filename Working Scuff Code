@@ -34,6 +34,10 @@ while game:
                                     elif my_board[player][player_peace] != Trun:
                                                  print("This is not your peace or there is no peace in that position; Please Try again")
                                                  continue
+                                    elif player - 1 > move_y > player + 1  or player_peace -1 > move_y > player_peace + 1:
+                                                print("You can't move more then one diagonal place from the original position of the peace; Please Try again")
+                                                continue
+                                    
                                     exception = False
                         my_board[move_y][move_x] = Trun
                         my_board[player][player_peace] = 0
