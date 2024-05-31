@@ -1,0 +1,15 @@
+my_board = [[1,1,1,1,1],
+            [1,0,0,0,1],
+            [0,0,0,0,0],
+            [2,0,0,0,2],
+            [2,2,2,2,2]]
+While True:
+  player = int(input("the placement of the peace in the y-aix (from 0-4): "))
+  player_peace = int(input("The peace you want (from 0-4): "))
+  move_y = int(input(" y-coordinates: "))
+  move_x = int(input(" x-coordinates: "))
+  my_board[move_y][move_x] = 1
+  my_board[player][player_peace] = 0
+  
+  for i  in range(0,len(my_board)):
+      print(my_board[i])
