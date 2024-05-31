@@ -3,9 +3,14 @@ my_board = [[1,1,1,1,1],
             [0,0,0,0,0],
             [2,0,0,0,2],
             [2,2,2,2,2]]
+win_condition_1 = [[1,0,0,0,1],
+                   [1,1,1,1,1]]
+win_condition_2 = [[2,2,2,2,2],
+                   [2,0,0,0,2]]
 Round = 0
 exception = True
-while True:
+game = True
+while game:
             Trun = 1
             Round += 1
             print(f"Round: {Round}")
@@ -36,5 +41,14 @@ while True:
                         Trun += 1
                         for i  in range(0,len(my_board)):
                                     print(my_board[i])
+                        if win_condition_1[0] ==  my_board[3] and win_condition_1[1] ==  my_board[4]:
+                                    Trun = 1
+                                    game = False
+
+                        elif win_condition_2[0] ==  my_board[0] and win_condition_1[1] ==  my_board[1]:
+                                    Trun = 2
+                                    game = False
+
+print(f" Game Over! Congratulation, Player_{Trun} Won !!!! ")
 
 
