@@ -38,6 +38,7 @@ while game:
                         my_board[move_y][move_x] = Trun
                         my_board[player][player_peace] = 0
                         Trun += 1
+                        exception = True
                         for i  in range(0,len(my_board)):
                                     print(my_board[i])
                         if win_condition_1[0] ==  my_board[3] and win_condition_1[1] ==  my_board[4]:
