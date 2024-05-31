@@ -10,49 +10,51 @@ win_condition_2 = [[2,2,2,2,2],
 Round = 0
 exception = True
 game = True
+for i  in range(0,len(my_board)):
+            print(my_board[i])
 while game:
-            Trun = 1
+            Turn = 1
             Round += 1
             print(f"Round: {Round}")
             for t  in range(0,2):
-                        print(f"it player_{Trun} move")
+                        print(f"It's player_{Turn} move")
                         while exception:
                                     try:
-                                                player = int(input("the placement of the peace in the y-aix (from 0-4): "))
-                                                player_peace = int(input("The peace you want (from 0-4): "))
+                                                player = int(input("the placement of the piece in the y-axis (from 0-4): "))
+                                                player_piece = int(input("The piece you want (from 0-4): "))
                                                 move_y = int(input("y-coordinates: "))
                                                 move_x = int(input("x-coordinates: "))
                                     except ValueError:
                                                 print("Not a valid number; Please Try again")
-                                                continue
+                                                continueb
                                     except IndexError:
                                                 print("Not a valid number; Please Try again")
                                                 continue
-                                    elif my_board[move_y][move_x] != 0:
-                                                print("There is already a peace there; Please Try again")
+                                    if my_board[move_y][move_x] != 0:
+                                                print("There is already a piece there; Please Try again")
                                                 continue
-                                    elif my_board[player][player_peace] != Trun:
-                                                 print("This is not your peace or there is no peace in that position; Please Try again")
+                                    elif my_board[player][player_piece] != Turn:
+                                                 print("This is not your piece or there is no piece in that position; Please Try again")
                                                  continue
-                                    elif player - 1 > move_y > player + 1  or player_peace -1 > move_y > player_peace + 1:
-                                                print("You can't move more then one diagonal place from the original position of the peace; Please Try again")
+                                    elif player  move_y != 1 or move_y != -1 and move_x != 1 or move_x != -1:
+                                                print("You can't move more then one diagonal place from the original position of the piece; Please Try again")
                                                 continue
                                     
                                     exception = False
-                        my_board[move_y][move_x] = Trun
-                        my_board[player][player_peace] = 0
-                        Trun += 1
+                        my_board[player + move_y][player_piece + move_x] = Turn
+                        my_board[player][player_piece] = 0
+                        Turn += 1
                         exception = True
                         for i  in range(0,len(my_board)):
                                     print(my_board[i])
                         if win_condition_1[0] ==  my_board[3] and win_condition_1[1] ==  my_board[4]:
-                                    Trun = 1
+                                    Turn = 1
                                     game = False
 
                         elif win_condition_2[0] ==  my_board[0] and win_condition_1[1] ==  my_board[1]:
-                                    Trun = 2
+                                    Turn = 2
                                     game = False
 
-print(f" Game Over! Congratulation, Player_{Trun} Won !!!! ")
+print(f" Game Over! Congratulation, Player_{Turn} Won !!!! ")
 
 
