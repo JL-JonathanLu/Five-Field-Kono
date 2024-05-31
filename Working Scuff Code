@@ -28,12 +28,11 @@ while game:
                                     except IndexError:
                                                 print("Not a valid number; Please Try again")
                                                 continue
-                                    if  my_board[move_y][move_x] != 0:
+                                    elif my_board[move_y][move_x] != 0:
                                                 print("There is already a peace there; Please Try again")
                                                 continue
                                     elif my_board[player][player_peace] != Trun:
-                                                 print("This is not your peace or there is no peace in that position; 
-                                                        Please Try again")
+                                                 print("This is not your peace or there is no peace in that position; Please Try again")
                                                  continue
                                     exception = False
                         my_board[move_y][move_x] = Trun
