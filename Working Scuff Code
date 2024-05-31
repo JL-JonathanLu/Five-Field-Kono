@@ -10,6 +10,7 @@ win_condition_2 = [[2,2,2,2,2],
 Round = 0
 exception = True
 game = True
+movement = [1,-1]
 for i  in range(0,len(my_board)):
             print(my_board[i])
 while game:
@@ -36,7 +37,7 @@ while game:
                                     elif my_board[player][player_piece] != Turn:
                                                  print("This is not your piece or there is no piece in that position; Please Try again")
                                                  continue
-                                    elif player  move_y != 1 or move_y != -1 and move_x != 1 or move_x != -1:
+                                    elif move_y not in movement or move_x not in movement:
                                                 print("You can't move more then one diagonal place from the original position of the piece; Please Try again")
                                                 continue
                                     
