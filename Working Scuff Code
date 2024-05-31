@@ -25,13 +25,15 @@ while game:
                                                 player_piece = int(input("The piece you want (from 0-4): "))
                                                 move_y = int(input("y-coordinates: "))
                                                 move_x = int(input("x-coordinates: "))
+                                                my_board[player + move_y][player_piece + move_x]
+                                                my_board[player][player_piece]
                                     except ValueError:
                                                 print("Not a valid number; Please Try again")
                                                 continueb
                                     except IndexError:
                                                 print("Not a valid number; Please Try again")
                                                 continue
-                                    if my_board[move_y][move_x] != 0:
+                                    if my_board[player + move_y][player_piece + move_x] != 0:
                                                 print("There is already a piece there; Please Try again")
                                                 continue
                                     elif my_board[player][player_piece] != Turn:
