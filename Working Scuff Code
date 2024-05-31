@@ -10,13 +10,13 @@ win_condition_2 = [[2,2,2,2,2],
 Round = 0
 exception = True
 game = True
-movement = [1,-1]
-for i  in range(0,len(my_board)):
-            print(my_board[i])
+movement = [1,-1
 while game:
             Turn = 1
             Round += 1
             print(f"Round: {Round}")
+            for i  in range(0,len(my_board)):
+            print(my_board[i])
             for t  in range(0,2):
                         print(f"It's player_{Turn} move")
                         while exception:
@@ -48,15 +48,18 @@ while game:
                         my_board[player][player_piece] = 0
                         Turn += 1
                         exception = True
-                        for i  in range(0,len(my_board)):
-                                    print(my_board[i])
+                        if Turn == 2:
+                                    for i  in range(0,len(my_board)):
+                                                print(my_board[i])
                         if win_condition_1[0] ==  my_board[3] and win_condition_1[1] ==  my_board[4]:
                                     Turn = 1
                                     game = False
+                                    break
 
-                        elif win_condition_2[0] ==  my_board[0] and win_condition_1[1] ==  my_board[1]:
+                        elif win_condition_2[0] == my_board[0] and win_condition_2[1] == my_board[1]:
                                     Turn = 2
                                     game = False
+                                    break
 
 print(f" Game Over! Congratulation, Player_{Turn} Won !!!! ")
 
