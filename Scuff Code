@@ -4,17 +4,26 @@ my_board = [[1,1,1,1,1],
             [2,0,0,0,2],
             [2,2,2,2,2]]
 Round = 0
+exception = True
 while True:
             Trun = 1
-             print(f"Round: {Round += 1}")
+            print(f"Round: {Round += 1}")
             for t  in range(0,2):
                         print(f"it player_{Trun} move")
-                        player = int(input("the placement of the peace in the y-aix (from 0-4): "))
-                        player_peace = int(input("The peace you want (from 0-4): "))
-                        move_y = int(input(" y-coordinates: "))
-                        move_x = int(input(" x-coordinates: "))
+                        while exception:
+                                    try:
+                                                player = int(input("the placement of the peace in the y-aix (from 0-4): "))
+                                                player_peace = int(input("The peace you want (from 0-4): "))
+                                                move_y = int(input(" y-coordinates: "))
+                                                move_x = int(input(" x-coordinates: "))
+                                    except ValueError:
+                                                print("That was no valid number. Try again:")
+                                                continue
+                                    if  player =
+                                    
                         my_board[move_y][move_x] = Trun
                         my_board[player][player_peace] = 0
                         Trun += 1
                         for i  in range(0,len(my_board)):
                                     print(my_board[i])
+
