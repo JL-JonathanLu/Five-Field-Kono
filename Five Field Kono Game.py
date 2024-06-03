@@ -9,9 +9,8 @@ import board_class
 pg.init()
 
 # Define constants (add as necessary)
-
-# Create a surface for drawing
 surf_width, surf_height = 950, 900
+# Create a surface for drawing
 surface = pg.display.set_mode((surf_width, surf_height))
 pg.display.set_caption("My Pygame Program")
 
