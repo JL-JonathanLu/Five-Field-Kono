@@ -11,8 +11,8 @@ pg.init()
 # Define constants (add as necessary)
 surf_width, surf_height = 950, 900
 # Create a surface for drawing
-p1 = board_class.Game_Piece("red")
-p2 = board_class.Game_Piece("blue")
+p1 = board_class.GamePiece("red")
+p2 = board_class.GamePiece("blue")
 board = board_class.Board(170)
 surface = pg.display.set_mode((surf_width, surf_height))
 pg.display.set_caption("My Pygame Program")
@@ -33,8 +33,8 @@ while running:
     # Game logic goes here
     
     # Drawing commands go here
-    board.draw(surface)
-    p1.draw(surface)
+    board.draw_grid(surface)
+    p1.draw_piece(surface)
     # Update display, clock, etc.
     pg.display.update()
 
