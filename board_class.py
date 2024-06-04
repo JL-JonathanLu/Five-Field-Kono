@@ -14,6 +14,10 @@ class Board:
                 y_axi += 1
             self.grid.append(position)
             x_axi += 1
+
+        # check if the self.grid
+        for i  in range(0,len(self.grid)):
+            print(self.grid[i])
        
 
 class GamePiece(Board):
