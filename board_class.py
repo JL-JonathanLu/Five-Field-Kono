@@ -1,13 +1,19 @@
 class Board:
-    def __init__(self, blocksize, position = []):
+    def __init__(self, blocksize, grid = []):
         self.blocksize = blocksize
-        self.position = position
+        self.grid = grid
     def draw(self, surface):
+        x_axi = 0
         for x in range(50, 750, self.blocksize):
+            position = []
+            y_axi = 0
             for y in range(25, 750, self.blocksize):
                 rect = pg.Rect(x, y, self.blocksize, self.blocksize)
-                self.position.append((x,y))
                 pg.draw.rect(surface, "white", rect, 8)
+                position.append((x,y))
+                y_axi += 1
+            self.grid.append(position)
+            x_axi += 1
        
 
 class Game_Piece:
