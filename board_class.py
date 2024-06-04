@@ -2,7 +2,7 @@ class Board:
     def __init__(self, blocksize, grid = []):
         self.blocksize = blocksize
         self.grid = grid
-    def draw(self, surface):
+    def draw_grid(self, surface):
         x_axi = 0
         for x in range(50, 750, self.blocksize):
             position = []
@@ -16,10 +16,11 @@ class Board:
             x_axi += 1
        
 
-class Game_Piece:
+class GamePiece(Board):
     def __init__(self, colour = ()):
+        super().__init__(self, blocksize, grid = [])
         self.colour = colour
-    def draw(self, surface):
+    def draw_piece(self, surface):
         image = pg.draw.circle(surface, self.colour, (55, 790), 5)
         image_y //= 2
 
