@@ -11,9 +11,8 @@ pg.init()
 # Define constants (add as necessary)
 surf_width, surf_height = 950, 900
 # Create a surface for drawing
-p1 = board_class.GamePiece("red")
-p2 = board_class.GamePiece("blue")
-board = board_class.Board(170)
+p1 = board_class.GamePiece()
+p2 = board_class.GamePiece()
 surface = pg.display.set_mode((surf_width, surf_height))
 pg.display.set_caption("My Pygame Program")
 
@@ -25,16 +24,17 @@ while running:
         # Exit the program
         if event.type == pg.QUIT:
             running = False
-#         elif event.type == pg.MOUSEBUTTONDOWN:
-#             if event.button == 1:
+        elif event.type == pg.MOUSEBUTTONDOWN:
+            if p1.rect.
+                if event.button == 1:
+                
                 
                     
 
     # Game logic goes here
     
     # Drawing commands go here
-    board.draw_grid(surface)
-    p1.draw_piece(surface)
+    board_class.Board().draw_grid(surface)
     # Update display, clock, etc.
     pg.display.update()
 
