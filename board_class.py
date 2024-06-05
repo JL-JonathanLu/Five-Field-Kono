@@ -36,3 +36,6 @@ class Board(GamePiece):
 #         # check if the self.grid
 #         for i  in range(0,len(self.grid)):
 #             print(self.grid[i])
+
+
+
