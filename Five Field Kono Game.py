@@ -24,6 +24,11 @@ win_condition_2 = [[2,position],[0,position],[0,position],[0,position],[2,positi
                             [2,position],[2,position],[2,position],[2,position],[2,position]]
 
 blocksize = 170
+Turn = 1`
+player_piece_x = 0
+player_piece_y = 0
+move_y = 0 
+move_x = 0
 
 # Create a surface for drawing
 surface = pg.display.set_mode((surf_width, surf_height))
@@ -48,15 +53,63 @@ while running:
         if event.type == pg.QUIT:
             running = False
         elif event.type == pg.MOUSEBUTTONDOWN:
-            if event.button == 1:
-                mouse = pg.mouse.get_pos()
-                for i in sprite_group1:
-                    if side1_rect.collidepoint(mouse):
-                        print("click")
+            if event.button == 5:
+               if player_piece_y < 5:
+                  player_piece_y += 1
+            else:
+                  pass      
+            if event.button == 4:
+               if player_piece_y < 0:
+                  player_piece_y -= 1
+               else:
+                  pass
+        elif event.type == pg.KEYDOWN:
+            elif event.type == pg.k_1:
+                 player_piece_x = 0
+            elif event.type == pg.k_2:
+                 player_piece_x = 1
+            elif event.type == pg.k_3:
+                 player_piece_x = 2
+            elif event.type == pg.k_4:
+                 player_piece_x = 3
+            elif event.type == pg.k_d:
+                 move_y += 1 
+                 move_x += 1  
+            elif event.type == pg.k_s:
+                 move_y += 1 
+                 move_x -= 1
+            elif event.type == pg.k_w:
+                 move_y -= 1 
+                 move_x -= 1
+            elif event.type == pg.k_e:
+                 move_y -= 1 
+                 move_x += 1
                    
 
     # Game logic goes here
-   
+    if Turn >= 3:
+       Turn = 1     
+    while exception:
+          try:
+               grid[player_piece_y + move_y][player_piece_x + move_x] 
+               except IndexError:
+                       print("Not a valid number; Please Try again")
+                       continue
+               if grid[player_piece_y + move_y][player_piece_x + move_x] != 0:
+                        print("There is already a piece there; Please Try again")
+                        continue
+               elif grid[player_piece_y][player_piece_x] != Turn:
+                        print("This is not your piece or there is no piece in that position; Please Try again")
+                        continue
+                        
+            exception = False
+
+    if exception == False:  
+           grid[player_piece_y + move_y][player_piece_x + move_x][0] = Turn
+           grid[player_piece_y][player_piece_x] = 0
+           Turn += 1
+           exception = True 
+                
     # Drawing commands go here
     board_class.Board(blocksize, grid, position, side1, side2).draw_grid(surface)
     # Update display, clock, etc.
@@ -64,3 +117,5 @@ while running:
 
 # Shut down Pygame
 pg.quit()
+
+
