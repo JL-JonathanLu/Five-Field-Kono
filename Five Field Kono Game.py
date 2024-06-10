@@ -11,25 +11,27 @@ pg.init()
 # Define constants (add as necessary)
 surf_width, surf_height = 950, 900
 position = [0,0]
-grid =  [[[2,position],[2,position],[2,position],[2,position],[2,position]],
-            [[2,position],[0,position],[0,position],[0,position],[2,position]],
-            [[0,position],[0,position],[0,position],[0,position],[0,position]],
+grid =  [[[1,position],[1,position],[1,position],[1,position],[1,position]],
             [[1,position],[0,position],[0,position],[0,position],[1,position]],
-            [[1,position],[1,position],[1,position],[1,position],[1,position]]]
+            [[0,position],[0,position],[0,position],[0,position],[0,position]],
+            [[2,position],[0,position],[0,position],[0,position],[2,position]],
+            [[2,position],[2,position],[2,position],[2,position],[2,position]]]
 
-win_condition_1 = [[1,position],[1,position],[1,position],[1,position],[1,position],
-                               [1,position],[0,position],[0,position],[0,position],[1,position]]
+win_condition_1 = [[2,position],[2,position],[2,position],[2,position],[2,position],
+                               [2,position],[0,position],[0,position],[0,position],[2,position]]
 
-win_condition_2 = [[2,position],[0,position],[0,position],[0,position],[2,position],
-                            [2,position],[2,position],[2,position],[2,position],[2,position]]
+win_condition_2 = [[1,position],[0,position],[0,position],[0,position],[1,position],
+                            [1,position],[1,position],[1,position],[1,position],[1,position]]
 
 blocksize = 170
-Turn = 1`
+
 player_piece_x = 0
 player_piece_y = 0
 move_y = 0 
 move_x = 0
-
+Turn = 1
+exception = True
+movement = False
 # Create a surface for drawing
 surface = pg.display.set_mode((surf_width, surf_height))
 pg.display.set_caption("My Pygame Program")
@@ -44,6 +46,7 @@ side2_rect = side2.get_rect()
 side2 = pg.transform.scale(side2, (side2_rect.width * 0.31, side2_rect.height * 0.31))
 side2_rect_size = side2.get_size()
 
+
 # MAIN GAME LOOP
 running = True
 while running:
@@ -54,66 +57,84 @@ while running:
             running = False
         elif event.type == pg.MOUSEBUTTONDOWN:
             if event.button == 5:
-               if player_piece_y < 5:
+               if player_piece_y < 4:
                   player_piece_y += 1
+                  print(player_piece_y)
             else:
                   pass      
             if event.button == 4:
-               if player_piece_y < 0:
+               if player_piece_y > 0:
                   player_piece_y -= 1
+                  print(player_piece_y)
                else:
                   pass
         elif event.type == pg.KEYDOWN:
-            elif event.type == pg.k_1:
+            if event.key == pg.K_1:
                  player_piece_x = 0
-            elif event.type == pg.k_2:
+                 print(player_piece_x)
+            elif event.key == pg.K_2:
                  player_piece_x = 1
-            elif event.type == pg.k_3:
+                 print(player_piece_x)
+            elif event.key == pg.K_3:
                  player_piece_x = 2
-            elif event.type == pg.k_4:
+                 print(player_piece_x)
+            elif event.key == pg.K_4:
                  player_piece_x = 3
-            elif event.type == pg.k_d:
+                 print(player_piece_x)
+            elif event.key == pg.K_d:
                  move_y += 1 
-                 move_x += 1  
-            elif event.type == pg.k_s:
+                 move_x += 1
+                 movement = True
+            elif event.key == pg.K_a:
                  move_y += 1 
                  move_x -= 1
-            elif event.type == pg.k_w:
+                 movement = True
+            elif event.key == pg.K_q:
                  move_y -= 1 
                  move_x -= 1
-            elif event.type == pg.k_e:
+                 movement = True
+            elif event.key == pg.K_e:
                  move_y -= 1 
                  move_x += 1
+                 movement = True
                    
 
     # Game logic goes here
     if Turn >= 3:
-       Turn = 1     
+      Turn = 1
     while exception:
-          try:
-               grid[player_piece_y + move_y][player_piece_x + move_x] 
-               except IndexError:
-                       print("Not a valid number; Please Try again")
-                       continue
-               if grid[player_piece_y + move_y][player_piece_x + move_x] != 0:
-                        print("There is already a piece there; Please Try again")
-                        continue
-               elif grid[player_piece_y][player_piece_x] != Turn:
-                        print("This is not your piece or there is no piece in that position; Please Try again")
-                        continue
-                        
-            exception = False
-
-    if exception == False:  
-           grid[player_piece_y + move_y][player_piece_x + move_x][0] = Turn
-           grid[player_piece_y][player_piece_x] = 0
-           Turn += 1
-           exception = True 
+        try:
+            grid[player_piece_y + move_y][player_piece_x + move_x][0]
+        except IndexError:
+            print("Not a valid number; Please Try again")
+            continue
+        if movement: 
+            if grid[player_piece_y + move_y][player_piece_x + move_x][0] != 0:
+                move_y = 0
+                move_x = 0
+                print(grid[player_piece_y + move_y][player_piece_x + move_x][0])
+                continue
+            elif grid[player_piece_y][player_piece_x][0] != Turn:
+               # print(grid[player_piece_y + move_y][player_piece_x + move_x][0], Turn )
+                continue
+        movement = False          
+        exception = False
+    
+    if movement:
+        if exception == False:  
+               grid[player_piece_y + move_y][player_piece_x + move_x][0] = Turn
+               grid[player_piece_y][player_piece_x][0] = 0
+               Turn += 1
+               print(grid[player_piece_y + move_y][player_piece_x + move_x],grid[player_piece_y][player_piece_x])
+               exception = True 
                 
     # Drawing commands go here
+    surface.fill("black")
     board_class.Board(blocksize, grid, position, side1, side2).draw_grid(surface)
+    board_class.Board(blocksize, grid, position, side1, side2).draw_pieces(surface)
     # Update display, clock, etc.
     pg.display.update()
+
 
 # Shut down Pygame
 pg.quit()
