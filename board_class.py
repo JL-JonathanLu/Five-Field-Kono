@@ -26,21 +26,18 @@ class Board():
                 x_axis += 1
             y_axis += 1
 
-    def draw_pieces(self):
+    def draw_pieces(self,surface):
         for y in range(0,5):
-               for x in range(0,5)
-               if self.grid[y][x][0] == 1:
-                    surface.blit(self.side1, self.position)
-                elif self.grid[y][x][0] == 2:
-                    surface.blit(self.side2, self.position)
+               for x in range(0,5):
+                   if self.grid[y][x][0] == 1:
+                        surface.blit(self.side1, self.grid[y][x][1])
+                   elif self.grid[y][x][0] == 2:
+                        surface.blit(self.side2, self.grid[y][x][1])
+                        
+    
                
            
-    def turns(self):
-        turn = 0
-        move_x, move_y = 0, 0
-
-        turn = 0
-        move_x, move_y = 0, 0
+ 
 
 
 
