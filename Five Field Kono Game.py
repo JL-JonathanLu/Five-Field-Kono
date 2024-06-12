@@ -56,6 +56,9 @@ while running:
         if event.type == pg.QUIT:
             running = False
         elif event.type == pg.MOUSEBUTTONDOWN:
+#             if event.button == 1:
+#                 if pg.mouse.get_pos() == side1.rect.collidepoint():
+#                     print("test")
             if event.button == 5:
                if player_piece_y < 4:
                   player_piece_y += 1
@@ -115,7 +118,7 @@ while running:
                 print(grid[player_piece_y + move_y][player_piece_x + move_x][0])
                 continue
             elif grid[player_piece_y][player_piece_x][0] != Turn:
-               # print(grid[player_piece_y + move_y][player_piece_x + move_x][0], Turn )
+#                 print(grid[player_piece_y + move_y][player_piece_x + move_x][0], Turn)
                 continue
         movement = False          
         exception = False
@@ -125,7 +128,7 @@ while running:
                grid[player_piece_y + move_y][player_piece_x + move_x][0] = Turn
                grid[player_piece_y][player_piece_x][0] = 0
                Turn += 1
-               print(grid[player_piece_y + move_y][player_piece_x + move_x],grid[player_piece_y][player_piece_x])
+               print(grid[player_piece_y + move_y][player_piece_x + move_x], grid[player_piece_y][player_piece_x])
                exception = True 
                 
     # Drawing commands go here
