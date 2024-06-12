@@ -14,7 +14,7 @@ class Board():
         self.position = position
         self.side1 = side1
         self.side2 = side2
-    def draw_grid(self, surface):
+    def draw_grid(self, surface, win_condition_1, win_condition_2, Round):
         y_axis = 0
         for y in range(25, 750, self.blocksize):
             x_axis = 0
@@ -23,6 +23,11 @@ class Board():
                 pg.draw.rect(surface, "white", rect, 8)
                 self.position = (x + 13,y + 20)
                 self.grid[y_axis][x_axis][1] = self.position
+                if Round ==0:
+                    if  y_axis == 3 or y_axis == 4:
+                        win_condition_1[y_axis - 3][x_axis][1] = self.position
+                    elif y_axis == 0 or y_axis == 1:
+                        win_condition_2[y_axis][x_axis][1] = self.position
                 x_axis += 1
             y_axis += 1
 
@@ -33,11 +38,3 @@ class Board():
                         surface.blit(self.side1, self.grid[y][x][1])
                    elif self.grid[y][x][0] == 2:
                         surface.blit(self.side2, self.grid[y][x][1])
-                        
-    
-               
-           
- 
-
-
-
