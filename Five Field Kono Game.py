@@ -11,25 +11,26 @@ pg.init()
 # Define constants (add as necessary)
 surf_width, surf_height = 950, 900
 position = [0,0]
-grid =  [[[1,position],[1,position],[1,position],[1,position],[1,position]],
-            [[1,position],[0,position],[0,position],[0,position],[1,position]],
-            [[0,position],[0,position],[0,position],[0,position],[0,position]],
-            [[2,position],[0,position],[0,position],[0,position],[2,position]],
-            [[2,position],[2,position],[2,position],[2,position],[2,position]]]
+grid =  [[[2,position],[2,position],[2,position],[2,position],[2,position]],
+            [[0,position],[0,position],[0,position],[0,position],[2,position]],
+            [[0,position],[2,position],[0,position],[1,position],[0,position]],
+            [[1,position],[0,position],[0,position],[0,position],[0,position]],
+            [[1,position],[1,position],[1,position],[1,position],[1,position]]]
 
-win_condition_1 = [[2,position],[2,position],[2,position],[2,position],[2,position],
-                               [2,position],[0,position],[0,position],[0,position],[2,position]]
+win_condition_1 = [[[1,position],[0,position],[0,position],[0,position],[1,position]],
+                            [[1,position],[1,position],[1,position],[1,position],[1,position]]]
 
-win_condition_2 = [[1,position],[0,position],[0,position],[0,position],[1,position],
-                            [1,position],[1,position],[1,position],[1,position],[1,position]]
+win_condition_2 = [[[2,position],[2,position],[2,position],[2,position],[2,position]],
+                               [[2,position],[0,position],[0,position],[0,position],[2,position]]]
 
 blocksize = 170
 
 player_piece_x = 0
 player_piece_y = 0
-move_y = 0 
+move_y = 0
 move_x = 0
 Turn = 1
+Round = 0
 exception = True
 movement = False
 # Create a surface for drawing
@@ -56,9 +57,6 @@ while running:
         if event.type == pg.QUIT:
             running = False
         elif event.type == pg.MOUSEBUTTONDOWN:
-#             if event.button == 1:
-#                 if pg.mouse.get_pos() == side1.rect.collidepoint():
-#                     print("test")
             if event.button == 5:
                if player_piece_y < 4:
                   player_piece_y += 1
@@ -85,61 +83,74 @@ while running:
                  player_piece_x = 3
                  print(player_piece_x)
             elif event.key == pg.K_d:
-                 move_y += 1 
+                 move_y += 1
                  move_x += 1
                  movement = True
             elif event.key == pg.K_a:
-                 move_y += 1 
+                 move_y += 1
                  move_x -= 1
                  movement = True
             elif event.key == pg.K_q:
-                 move_y -= 1 
+                 move_y -= 1
                  move_x -= 1
                  movement = True
             elif event.key == pg.K_e:
-                 move_y -= 1 
+                 move_y -= 1
                  move_x += 1
                  movement = True
                    
 
-    # Game logic goes here
+    # GaRound = 0me logic goes here
     if Turn >= 3:
       Turn = 1
-    while exception:
-        try:
-            grid[player_piece_y + move_y][player_piece_x + move_x][0]
-        except IndexError:
-            print("Not a valid number; Please Try again")
-            continue
-        if movement: 
-            if grid[player_piece_y + move_y][player_piece_x + move_x][0] != 0:
-                move_y = 0
-                move_x = 0
-                print(grid[player_piece_y + move_y][player_piece_x + move_x][0])
-                continue
-            elif grid[player_piece_y][player_piece_x][0] != Turn:
-#                 print(grid[player_piece_y + move_y][player_piece_x + move_x][0], Turn)
-                continue
-        movement = False          
-        exception = False
-    
+    try:
+        grid[player_piece_y + move_y][player_piece_x + move_x][0]
+    except IndexError:
+        print("Not a valid number; Please Try again")
     if movement:
-        if exception == False:  
+        if grid[player_piece_y][player_piece_x][0] != Turn:
+            print(Turn)
+            exception = Falseround
+#           print(grid[player_piece_y + move_y][player_piece_x + move_x][0], Turn)
+        elif grid[player_piece_y + move_y][player_piece_x + move_x][0] != 0:
+            print(grid[player_piece_y + move_y][player_piece_x + move_x])
+            print(Turn)
+            move_y = 0
+            move_x = 0
+            exception = False
+   
+    if movement:
+        if exception == True:  
                grid[player_piece_y + move_y][player_piece_x + move_x][0] = Turn
                grid[player_piece_y][player_piece_x][0] = 0
                Turn += 1
-               print(grid[player_piece_y + move_y][player_piece_x + move_x], grid[player_piece_y][player_piece_x])
-               exception = True 
-                
+               #print(grid[player_piece_y + move_y][player_piece_x + move_x], grid[player_piece_y][player_piece_x])
+        exception = True
+    if win_condition_1[0] ==  grid[3] and win_condition_1[1] ==  grid[4]:
+        Turn = 1
+        running = False
+       
+    elif win_condition_2[0] ==  grid[0] and win_condition_2[1] ==  grid[1]:
+        Turn = 2
+        running = False
+       
+
+               
     # Drawing commands go here
     surface.fill("black")
-    board_class.Board(blocksize, grid, position, side1, side2).draw_grid(surface)
+    board_class.Board(blocksize, grid, position, side1, side2).draw_grid(surface, win_condition_1,
+                                                                                                                     win_condition_2, Round)
     board_class.Board(blocksize, grid, position, side1, side2).draw_pieces(surface)
     # Update display, clock, etc.
     pg.display.update()
-
+    if movement:
+         move_y = 0
+         move_x = 0
+         player_piece_y = 0
+         player_piece_x = 0
+    movement = False
+    Round += 1
 
 # Shut down Pygame
 pg.quit()
-
-
+print(f" Game Over! Congratulations, Player_{Turn} Won !!!! ")
