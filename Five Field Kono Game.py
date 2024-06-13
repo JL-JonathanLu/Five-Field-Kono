@@ -11,17 +11,17 @@ pg.init()
 # Define constants (add as necessary)
 surf_width, surf_height = 950, 900
 position = [0,0]
-grid =  [[[1,position],[1,position],[1,position],[1,position],[1,position]],
-            [[1,position],[0,position],[0,position],[0,position],[1,position]],
-            [[0,position],[2,position],[0,position],[0,position],[0,position]],
-            [[2,position],[0,position],[0,position],[0,position],[2,position]],
-            [[2,position],[2,position],[2,position],[2,position],[2,position]]]
+grid =  [[[2,position],[2,position],[2,position],[2,position],[2,position]],
+            [[2,position],[0,position],[0,position],[0,position],[0,position]],
+            [[0,position],[0,position],[0,position],[1,position],[0,position]],
+            [[1,position],[0,position],[2,position],[0,position],[0,position]],
+            [[1,position],[1,position],[1,position],[1,position],[1,position]]]
 
 win_condition_1 = [[[1,position],[0,position],[0,position],[0,position],[1,position]],
-                   [[1,position],[1,position],[1,position],[1,position],[1,position]]]
+                               [[1,position],[1,position],[1,position],[1,position],[1,position]]]
 
 win_condition_2 = [[[2,position],[2,position],[2,position],[2,position],[2,position]],
-                   [[2,position],[0,position],[0,position],[0,position],[2,position]]]
+                                [[2,position],[0,position],[0,position],[0,position],[2,position]]]
 
 blocksize = 170
 player_piece_x = 0
@@ -48,12 +48,23 @@ side2_rect = side2.get_rect()
 side2 = pg.transform.scale(side2, (side2_rect.width * 0.31, side2_rect.height * 0.31))
 side2_rect_size = side2.get_size()
 
+side1_select = pg.image.load("images/player_1_select.png")
+side1_select_rect = side1_select.get_rect()
+side1_select = pg.transform.scale(side1_select, (side1_select_rect.width * 0.31, side1_select_rect.height * 0.31))
+side1_select_rect_size = side1_select.get_size()
+side2_select = pg.image.load("images/player_2_select.png")
+side2_select_rect = side2_select.get_rect()
+side2_select = pg.transform.scale(side2_select, (side2_select_rect.width * 0.31, side2_select_rect.height * 0.31))
+side2_select_rect_size = side2_select.get_size()
+
 # load a font
-#header_size = pg.font.Font("Fonts/KirbyClassic.ttf", 100)
-#main_text_size = pg.font.Font("Fonts/KirbyClassic.ttf", 50)
-#intro_text = main_text_size("Start", True, "black")
-#win_text = header_size.render(f" Game Over! Congratulations, Player_{Turn} Won !!!! ", True, "gold")
-#replay_text = main_text_size("Play again?", True, "black")
+header_size = pg.font.Font("fonts/MUSASHI.ttf", 100)
+main_text_size = pg.font.Font("fonts/Doctor Glitch.otf", 50)
+end_text_size = pg.font.Font("fonts/MUSASHI.ttf", 60)
+intro_text = main_text_size.render("Start", True, "black")
+name_text = header_size.render(f"Five Field Kono", True, "gold")
+win_text = end_text_size.render(f"Congratulations, Player_{Turn} Won !!!!", True, "gold")
+replay_text = main_text_size.render("Play again?", True, "red")
 
 # MAIN GAME LOOP
 running = True
@@ -66,16 +77,21 @@ while running:
         # selecting a player's pieces    
         # selecting a row    
         elif event.type == pg.MOUSEBUTTONDOWN:
+            if event.button == 1:
+                if game == "on":
+                    game = "start"
+                elif game == "end":
+                    game = "start"
             if event.button == 5:
                if player_piece_y < 4:
                   player_piece_y += 1
-                  print(player_piece_y)
+                  print(f"Row {player_piece_y}")
             else:
                   pass      
             if event.button == 4:
                if player_piece_y > 0:
                   player_piece_y -= 1
-                  print(player_piece_y)
+                  print(f"Row {player_piece_y}")
                else:
                   pass                  
         elif event.type == pg.KEYDOWN:
@@ -91,6 +107,9 @@ while running:
                  print(player_piece_x)
             elif event.key == pg.K_4:
                  player_piece_x = 3
+                 print(player_piece_x)
+            elif event.key == pg.K_5:
+                 player_piece_x = 4
                  print(player_piece_x)
             # movement option for the player          
             elif event.key == pg.K_d:
@@ -143,7 +162,7 @@ while running:
             exception = False        
    
     if movement:
-        if exception == True:  
+        if exception:  
                grid[player_piece_y + move_y][player_piece_x + move_x][0] = Turn
                grid[player_piece_y][player_piece_x][0] = 0
                Turn += 1
@@ -152,8 +171,9 @@ while running:
                 
     if win_condition_1[0] ==  grid[3] and win_condition_1[1] ==  grid[4]:
         Turn = 1
+        print(game)
         game = "end"
-       
+           
     elif win_condition_2[0] ==  grid[0] and win_condition_2[1] ==  grid[1]:
         Turn = 2
         game = "end"              
@@ -165,16 +185,20 @@ while running:
     # When there is a winner and the game end, when game == "end"           
     if game == "on":
        surface.fill("white")
-       surface.blit(intro_text, (500, 400))
+       surface.blit(name_text, (130,300 ))
+       surface.blit(intro_text, (375,500 ))
     elif game == "start":
        surface.fill("black")
-       board_class.Board(blocksize, grid, position, side1, side2).draw_grid(surface, win_condition_1,
-                                                                         win_condition_2, Round)
-       board_class.Board(blocksize, grid, position, side1, side2).draw_pieces(surface)
+       board_class.Board(blocksize, grid, position, side1, side1_select,
+                                        side2, side2_select).draw_grid(surface, win_condition_1,
+                                                                                            win_condition_2, Round,)
+       
+       board_class.Board(blocksize, grid, position, side1, side1_select,
+                                      side2, side2_select).draw_pieces(surface, player_piece_y, player_piece_x)
     elif game == "end":
        surface.fill("black")
-       surface.blit(win_text, (4000, 400))
-       surface.blit(replay_text, (500, 400))
+       surface.blit(win_text, (25, 400))
+       surface.blit(replay_text, (300, 500))
     
     # Update display, clock, etc.
     pg.display.update()
