@@ -8,12 +8,14 @@ import pygame as pg
 
        
 class Board():
-    def __init__(self, blocksize, grid, position, side1, side2):
+    def __init__(self, blocksize, grid, position, side1, side1_select, side2, side2_select):
         self.blocksize = blocksize
         self.grid = grid
         self.position = position
         self.side1 = side1
         self.side2 = side2
+        self.side1_select = side1_select
+        self.side2_select = side2_select
     def draw_grid(self, surface, win_condition_1, win_condition_2, Round):
         y_axis = 0
         for y in range(25, 750, self.blocksize):
@@ -31,10 +33,16 @@ class Board():
                 x_axis += 1
             y_axis += 1
 
-    def draw_pieces(self,surface):
+    def draw_pieces(self,surface, player_piece_y, player_piece_x):
         for y in range(0,5):
                for x in range(0,5):
                    if self.grid[y][x][0] == 1:
-                        surface.blit(self.side1, self.grid[y][x][1])
+                       if self.grid[y][x] != self.grid[player_piece_y][player_piece_x]:
+                           surface.blit(self.side1, self.grid[y][x][1])
+                       elif self.grid[y][x] == self.grid[player_piece_y][player_piece_x]:
+                           surface.blit(self.side1_select, self.grid[y][x][1])
                    elif self.grid[y][x][0] == 2:
-                        surface.blit(self.side2, self.grid[y][x][1])
+                       if self.grid[y][x] != self.grid[player_piece_y][player_piece_x]:
+                            surface.blit(self.side2, self.grid[y][x][1])
+                       elif self.grid[y][x] == self.grid[player_piece_y][player_piece_x]:
+                            surface.blit(self.side2_select, self.grid[y][x][1])
