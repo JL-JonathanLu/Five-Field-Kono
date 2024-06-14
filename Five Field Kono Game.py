@@ -63,9 +63,14 @@ side2_select_rect_size = side2_select.get_size()
 # load a font
 header_size = pg.font.Font("fonts/MUSASHI.ttf", 100)
 main_text_size = pg.font.Font("fonts/Doctor Glitch.otf", 50)
+tutorial_text_size = pg.font.Font("fonts/MUSASHI.ttf", 60)
+tutorial_text_size2 = pg.font.Font("fonts/MUSASHI.ttf", 40)
 end_text_size = pg.font.Font("fonts/MUSASHI.ttf", 60)
 intro_text = main_text_size.render("Start", True, "black")
 name_text = header_size.render(f"Five Field Kono", True, "gold")
+tutorial_header_text = main_text_size.render("Tutorial", True, "gold")
+tutorial_text1 = tutorial_text_size.render("Scroll wheel to select row", True, "black")
+tutorial_text2 = tutorial_text_size2.render("Use numbers 1-5 to select the piece in the row", True, "black")
 replay_text = main_text_size.render("Play again?", True, "red")
 
 # Loads sound
@@ -87,6 +92,8 @@ while running:
         elif event.type == pg.MOUSEBUTTONDOWN:
             if event.button == 1:
                 if game == "on":
+                    game = "tutorial"
+                elif game == "tutorial":
                     game = "start"
                 elif game == "end":
                     game = "start"
@@ -198,6 +205,11 @@ while running:
        surface.fill("white")
        surface.blit(name_text, (130,300 ))
        surface.blit(intro_text, (375,500 ))
+    if game == "tutorial":
+        surface.fill("white")
+        surface.blit(tutorial_header_text, (330, 100))
+        surface.blit(tutorial_text1, (130, 300))
+        surface.blit(tutorial_text2, (50, 500))
     elif game == "start":
        surface.fill("black")
        board_class.Board(blocksize, grid, position, side1, side1_select,
