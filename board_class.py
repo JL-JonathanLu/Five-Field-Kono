@@ -13,7 +13,9 @@ class Board():
         """draws board on game window using list
             blocksize is used to create width and height of each tile
             positions is assigned to each tile in the grid list
-            x_axis is the tiles in the row, y_axis is the rows itself"""
+            x_axis is the tiles in the row, y_axis is the rows itself
+            as x_axis increases, a new tile is formed
+            as y_axis increases, a new row is formed"""
         y_axis = 0
         for y in range(25, 750, self.blocksize):
             x_axis = 0
@@ -31,7 +33,7 @@ class Board():
 
     def draw_pieces(self,surface, player_piece_y, player_piece_x):
         """draws game pieces on the board
-        loops 5 times as the board is a 5x5
+        each loop loops 5 times as the board is a 5x5
         blits game piece based on number assigned to grid list
         1 = player 1 piece
         2 = player 2 piece"""
