@@ -8,19 +8,19 @@ surf_width, surf_height = 950, 900
 
 # Variable containing grid layout and positions on the pygame window
 position = [0,0]
-grid =  [[[2,position],[2,position],[2,position],[2,position],[2,position]],
+grid =  [[[1,position],[1,position],[1,position],[1,position],[1,position]],
+            [[1,position],[0,position],[0,position],[0,position],[1,position]],
+            [[0,position],[0,position],[0,position],[0,position],[0,position]],
             [[2,position],[0,position],[0,position],[0,position],[2,position]],
-            [[0,position],[0,position],[0,position],[1,position],[0,position]],
-            [[1,position],[0,position],[0,position],[0,position],[0,position]],
-            [[1,position],[1,position],[1,position],[1,position],[1,position]]]
+            [[2,position],[2,position],[2,position],[2,position],[2,position]]]
 
 
 # Conditions to end the game
 win_condition_1 = [[[1,position],[0,position],[0,position],[0,position],[1,position]],
-                    [[1,position],[1,position],[1,position],[1,position],[1,position]]]
+                                [[1,position],[1,position],[1,position],[1,position],[1,position]]]
 
 win_condition_2 = [[[2,position],[2,position],[2,position],[2,position],[2,position]],
-                    [[2,position],[0,position],[0,position],[0,position],[2,position]]]
+                                [[2,position],[0,position],[0,position],[0,position],[2,position]]]
 
 # Varibles used in the class file
 blocksize = 170
@@ -31,7 +31,7 @@ move_x = 0
 
 # Variables used in the game loop
 Turn = 1
-Round = 0
+
 exception = True
 movement = False
 game = "on"
@@ -68,6 +68,10 @@ intro_text = main_text_size.render("Start", True, "black")
 name_text = header_size.render(f"Five Field Kono", True, "gold")
 replay_text = main_text_size.render("Play again?", True, "red")
 
+# Loads sound
+move_sound = pg.mixer.Sound("sounds/move_sound.mp3")
+pg.mixer.music.load("sounds/background_music.mp3")
+pg.mixer.music.play()
 # MAIN GAME LOOP
 running = True
 while running:
@@ -80,65 +84,64 @@ while running:
         # selecting a row
         # Left mouse button clicks (mouse button 1) are used for screen transitions from title screen and game end screen
         # Scroll wheel (mouse button 4 and 5) selects grid row   
-        if game == "on" or game == "end":
-            elif event.type == pg.MOUSEBUTTONDOWN:
-                if event.button == 1:
-                    if game == "on":
-                        game = "start"
-                    elif game == "end":
-                        game = "start"
+        elif event.type == pg.MOUSEBUTTONDOWN:
+            if event.button == 1:
+                if game == "on":
+                    game = "start"
+                elif game == "end":
+                    game = "start"
         if game == "start":
             if event.type == pg.MOUSEBUTTONDOWN:
                 if event.button == 5:
-                   if player_piece_y < 4:
-                      player_piece_y += 1
-                      print(f"Row {player_piece_y}")
+                     if player_piece_y < 4:
+                        player_piece_y += 1
+                        print(f"Row {player_piece_y}")
                 else:
-                      pass      
+                        pass      
                 if event.button == 4:
-                   if player_piece_y > 0:
-                      player_piece_y -= 1
-                      print(f"Row {player_piece_y}")
-                   else:
-                      pass                  
+                    if player_piece_y > 0:
+                        player_piece_y -= 1
+                        print(f"Row {player_piece_y}")
+                    else:
+                        pass                  
             elif event.type == pg.KEYDOWN:
-                # selecting a column        
+                    # selecting a column        
                 if event.key == pg.K_1:
-                     player_piece_x = 0
-                     print(player_piece_x)
+                        player_piece_x = 0
+                        print(player_piece_x)
                 elif event.key == pg.K_2:
-                     player_piece_x = 1
-                     print(player_piece_x)
+                        player_piece_x = 1
+                        print(player_piece_x)
                 elif event.key == pg.K_3:
-                     player_piece_x = 2
-                     print(player_piece_x)
+                        player_piece_x = 2
+                        print(player_piece_x)
                 elif event.key == pg.K_4:
-                     player_piece_x = 3
-                     print(player_piece_x)
+                        player_piece_x = 3
+                        print(player_piece_x)
                 elif event.key == pg.K_5:
-                     player_piece_x = 4
-                     print(player_piece_x)
-                # movement option for the player
-                # d key moves piece down and right
-                # a key moves piece down and left
-                # q key moves piece up and left
-                # e key moves piece up and right
+                        player_piece_x = 4
+                        print(player_piece_x)
+                    # movement option for the player
+                    # d key moves piece down and right
+                    # a key moves piece down and left
+                    # q key moves piece up and left
+                    # e key moves piece up and right
                 elif event.key == pg.K_d:
-                     move_y += 1
-                     move_x += 1
-                     movement = True
+                        move_y += 1
+                        move_x += 1
+                        movement = True
                 elif event.key == pg.K_a:
-                     move_y += 1
-                     move_x -= 1
-                     movement = True
+                        move_y += 1
+                        move_x -= 1
+                        movement = True
                 elif event.key == pg.K_q:
-                     move_y -= 1
-                     move_x -= 1
-                     movement = True
+                        move_y -= 1
+                        move_x -= 1
+                        movement = True
                 elif event.key == pg.K_e:
-                     move_y -= 1
-                     move_x += 1
-                     movement = True
+                        move_y -= 1
+                        move_x += 1
+                        movement = True
                    
 
     # Turn system
@@ -157,14 +160,12 @@ while running:
     # The third check is to see if the moving piece is going to teleport across the board  
     if movement:
         if grid[player_piece_y][player_piece_x][0] != Turn:
-            print(Turn)
             exception = False
         elif grid[player_piece_y + move_y][player_piece_x + move_x][0] != 0:
             move_y = 0
             move_x = 0
             exception = False
         elif -1 in grid[player_piece_y + move_y][player_piece_x + move_x][1]:
-            print(grid[player_piece_y + move_y][player_piece_x + move_x][1])
             move_y = 0
             move_x = 0
             exception = False        
@@ -173,8 +174,8 @@ while running:
         if exception:  
                grid[player_piece_y + move_y][player_piece_x + move_x][0] = Turn
                grid[player_piece_y][player_piece_x][0] = 0
+               move_sound.play()
                Turn += 1
-               #print(grid[player_piece_y + move_y][player_piece_x + move_x], grid[player_piece_y][player_piece_x])
         exception = True
 
 # Compares current grid to the victory condtions
@@ -182,7 +183,6 @@ while running:
     if game == "start":
         if win_condition_1[0][0] == grid[3][0] and win_condition_1[0][4] ==  grid[3][4] and win_condition_1[1] == grid[4]:
             Turn = 1
-            print(game)
             game = "end"
                
         elif win_condition_2[0] == grid[0] and win_condition_2[1][0] == grid[1][0] and win_condition_2[1][4] == grid[1][4]:
@@ -202,12 +202,11 @@ while running:
        surface.fill("black")
        board_class.Board(blocksize, grid, position, side1, side1_select,
                                         side2, side2_select).draw_grid(surface, win_condition_1,
-                                                                        win_condition_2, Round,)
+                                                                        win_condition_2)
        
        board_class.Board(blocksize, grid, position, side1, side1_select,
                                       side2, side2_select).draw_pieces(surface, player_piece_y, player_piece_x)
     elif game == "end":
-       print(Turn)
        win_text = end_text_size.render(f"Congratulations, Player_{Turn} Won !!!!", True, "gold")
        surface.fill("black")
        surface.blit(win_text, (25, 400))
@@ -220,10 +219,8 @@ while running:
          move_x = 0
          player_piece_y = 0
          player_piece_x = 0
-    movement = False
-    Round += 1      
+    movement = False      
 
 # Shut down Pygame
 pg.quit()
-print(f" Game Over! Congratulations, Player_{Turn} Won !!!! ")
 
