@@ -1,15 +1,12 @@
-# ===========================================================================
-# PYGAME TEMPLATE
-# Use this as a starting point for your Pygame projects.
-# ===========================================================================
-
-# Imported modules and initialization (add as necessary)
+# Imported pygame module and python file containing classes to program the game board
 import pygame as pg
 import board_class
 pg.init()
 
-# Define constants (add as necessary)
+# Variables containing pygame window size
 surf_width, surf_height = 950, 900
+
+# Variable containing grid layout and positions on the pygame window
 position = [0,0]
 grid =  [[[2,position],[2,position],[2,position],[2,position],[2,position]],
             [[2,position],[0,position],[0,position],[0,position],[0,position]],
@@ -17,17 +14,22 @@ grid =  [[[2,position],[2,position],[2,position],[2,position],[2,position]],
             [[1,position],[0,position],[2,position],[0,position],[0,position]],
             [[1,position],[1,position],[1,position],[1,position],[1,position]]]
 
+
+# Conditions to end the game
 win_condition_1 = [[[1,position],[0,position],[0,position],[0,position],[1,position]],
                                [[1,position],[1,position],[1,position],[1,position],[1,position]]]
 
 win_condition_2 = [[[2,position],[2,position],[2,position],[2,position],[2,position]],
                                 [[2,position],[0,position],[0,position],[0,position],[2,position]]]
 
+# Varibles used in the class file
 blocksize = 170
 player_piece_x = 0
 player_piece_y = 0
 move_y = 0
 move_x = 0
+
+# Variables used in the game loop
 Turn = 1
 Round = 0
 exception = True
@@ -36,7 +38,7 @@ game = "start"
 
 # Create a surface for drawing
 surface = pg.display.set_mode((surf_width, surf_height))
-pg.display.set_caption("My Pygame Program")
+pg.display.set_caption("Five Field Kono")
 
 # Creating player's pieces
 side1 = pg.image.load("images/player_1.png")
@@ -48,6 +50,7 @@ side2_rect = side2.get_rect()
 side2 = pg.transform.scale(side2, (side2_rect.width * 0.31, side2_rect.height * 0.31))
 side2_rect_size = side2.get_size()
 
+#Creates a separate player piece to highlight current piece selected
 side1_select = pg.image.load("images/player_1_select.png")
 side1_select_rect = side1_select.get_rect()
 side1_select = pg.transform.scale(side1_select, (side1_select_rect.width * 0.31, side1_select_rect.height * 0.31))
@@ -75,7 +78,9 @@ while running:
         if event.type == pg.QUIT:
             running = False
         # selecting a player's pieces    
-        # selecting a row    
+        # selecting a row
+        # Left mouse button clicks (mouse button 1) are used for screen transitions from title screen and game end screen
+        # Scroll wheel (mouse button 4 and 5) selects grid row   
         elif event.type == pg.MOUSEBUTTONDOWN:
             if event.button == 1:
                 if game == "on":
@@ -111,7 +116,11 @@ while running:
             elif event.key == pg.K_5:
                  player_piece_x = 4
                  print(player_piece_x)
-            # movement option for the player          
+            # movement option for the player
+            # d key moves piece down and right
+            # a key moves piece down and left
+            # q key moves piece up and left
+            # e key moves piece up and right
             elif event.key == pg.K_d:
                  move_y += 1
                  move_x += 1
@@ -130,7 +139,8 @@ while running:
                  movement = True
                    
 
-    # Game logic
+    # Turn system
+    # Turn resets to 1 after turn 2, turn 1 represents player 1 and turn 2 represents player 2
     if Turn >= 3:
       Turn = 1
     # exception and checks to stop player from breaking the rule            
@@ -168,7 +178,10 @@ while running:
                Turn += 1
                #print(grid[player_piece_y + move_y][player_piece_x + move_x], grid[player_piece_y][player_piece_x])
         exception = True
-                
+
+# Compares current grid to the victory condtions
+# If the grid matches the win condition, the game ends and determines the winner based on the win condition matched
+
     if win_condition_1[0] ==  grid[3] and win_condition_1[1] ==  grid[4]:
         Turn = 1
         print(game)
@@ -200,7 +213,7 @@ while running:
        surface.blit(win_text, (25, 400))
        surface.blit(replay_text, (300, 500))
     
-    # Update display, clock, etc.
+    # Updates game display and resets movement for the next player's turn
     pg.display.update()
     if movement:
          move_y = 0
