@@ -10,6 +10,10 @@ class Board():
         self.side1_select = side1_select
         self.side2_select = side2_select
     def draw_grid(self, surface, win_condition_1, win_condition_2):
+        """draws board on game window using list
+            blocksize is used to create width and height of each tile
+            positions is assigned to each tile in the grid list
+            x_axis is the tiles in the row, y_axis is the rows itself"""
         y_axis = 0
         for y in range(25, 750, self.blocksize):
             x_axis = 0
@@ -26,6 +30,11 @@ class Board():
             y_axis += 1
 
     def draw_pieces(self,surface, player_piece_y, player_piece_x):
+        """draws game pieces on the board
+        loops 5 times as the board is a 5x5
+        blits game piece based on number assigned to grid list
+        1 = player 1 piece
+        2 = player 2 piece"""
         for y in range(0,5):
                for x in range(0,5):
                    if self.grid[y][x][0] == 1:
