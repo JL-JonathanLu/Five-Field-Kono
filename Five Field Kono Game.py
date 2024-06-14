@@ -80,64 +80,65 @@ while running:
         # selecting a row
         # Left mouse button clicks (mouse button 1) are used for screen transitions from title screen and game end screen
         # Scroll wheel (mouse button 4 and 5) selects grid row   
-        elif event.type == pg.MOUSEBUTTONDOWN:
-            if event.button == 1:
-                if game == "on":
-                    game = "start"
-                elif game == "end":
-                    game = "start"
-            if game == "start":
-                if event.type == pg.MOUSEBUTTONDOWN:
-                    if event.button == 5:
-                       if player_piece_y < 4:
-                          player_piece_y += 1
-                          print(f"Row {player_piece_y}")
-                    else:
-                          pass      
-                    if event.button == 4:
-                       if player_piece_y > 0:
-                          player_piece_y -= 1
-                          print(f"Row {player_piece_y}")
-                       else:
-                          pass                  
-                elif event.type == pg.KEYDOWN:
-                    # selecting a column        
-                    if event.key == pg.K_1:
-                         player_piece_x = 0
-                         print(player_piece_x)
-                    elif event.key == pg.K_2:
-                         player_piece_x = 1
-                         print(player_piece_x)
-                    elif event.key == pg.K_3:
-                         player_piece_x = 2
-                         print(player_piece_x)
-                    elif event.key == pg.K_4:
-                         player_piece_x = 3
-                         print(player_piece_x)
-                    elif event.key == pg.K_5:
-                         player_piece_x = 4
-                         print(player_piece_x)
-                    # movement option for the player
-                    # d key moves piece down and right
-                    # a key moves piece down and left
-                    # q key moves piece up and left
-                    # e key moves piece up and right
-                    elif event.key == pg.K_d:
-                         move_y += 1
-                         move_x += 1
-                         movement = True
-                    elif event.key == pg.K_a:
-                         move_y += 1
-                         move_x -= 1
-                         movement = True
-                    elif event.key == pg.K_q:
-                         move_y -= 1
-                         move_x -= 1
-                         movement = True
-                    elif event.key == pg.K_e:
-                         move_y -= 1
-                         move_x += 1
-                         movement = True
+        if game == "on" or game == "end":
+            elif event.type == pg.MOUSEBUTTONDOWN:
+                if event.button == 1:
+                    if game == "on":
+                        game = "start"
+                    elif game == "end":
+                        game = "start"
+        if game == "start":
+            if event.type == pg.MOUSEBUTTONDOWN:
+                if event.button == 5:
+                   if player_piece_y < 4:
+                      player_piece_y += 1
+                      print(f"Row {player_piece_y}")
+                else:
+                      pass      
+                if event.button == 4:
+                   if player_piece_y > 0:
+                      player_piece_y -= 1
+                      print(f"Row {player_piece_y}")
+                   else:
+                      pass                  
+            elif event.type == pg.KEYDOWN:
+                # selecting a column        
+                if event.key == pg.K_1:
+                     player_piece_x = 0
+                     print(player_piece_x)
+                elif event.key == pg.K_2:
+                     player_piece_x = 1
+                     print(player_piece_x)
+                elif event.key == pg.K_3:
+                     player_piece_x = 2
+                     print(player_piece_x)
+                elif event.key == pg.K_4:
+                     player_piece_x = 3
+                     print(player_piece_x)
+                elif event.key == pg.K_5:
+                     player_piece_x = 4
+                     print(player_piece_x)
+                # movement option for the player
+                # d key moves piece down and right
+                # a key moves piece down and left
+                # q key moves piece up and left
+                # e key moves piece up and right
+                elif event.key == pg.K_d:
+                     move_y += 1
+                     move_x += 1
+                     movement = True
+                elif event.key == pg.K_a:
+                     move_y += 1
+                     move_x -= 1
+                     movement = True
+                elif event.key == pg.K_q:
+                     move_y -= 1
+                     move_x -= 1
+                     movement = True
+                elif event.key == pg.K_e:
+                     move_y -= 1
+                     move_x += 1
+                     movement = True
                    
 
     # Turn system
