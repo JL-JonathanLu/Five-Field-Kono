@@ -197,8 +197,9 @@ while running:
             game = "end"              
                
     # Drawing commands
-    # break the game up into three different phase
+    # break the game up into four different phase
     # The intro screen, when game == "on"
+    # The tutorial screen, when game == "tutorial"
     # When the game is playing, when game == "start"
     # When there is a winner and the game end, when game == "end"           
     if game == "on":
